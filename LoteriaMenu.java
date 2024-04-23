@@ -1,71 +1,87 @@
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class LoteriaMenu {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
+public class Lotofacil {
+    public static void main(String[] args) throws IOException{
+        menu();
+    }
 
-        int opcao;
+    private static void menu() throws IOException{
+        int opcao = -1;
+        Scanner in = new Scanner(System.in);
         do {
-            System.out.println("**************************");
-            System.out.println("Menu LOTOFÁCIL:");
-            System.out.println("1) Apostar de 0 a 100");
-            System.out.println("2) Apostar de A à Z");
-            System.out.println("3) Apostar em par ou ímpar");
-            System.out.println("0) Sair");
-            System.out.println("**************************");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-
+            System.out.println("***********************************");
+            System.out.println("******** PROJETO LOTOFÁCIL ********\n");
+            System.out.println("Opção 1 - Apostar de 0 a 100");
+            System.out.println("Opção 2 - Apostar de A a Z");
+            System.out.println("Opção 3 - Apostar em par ou ímpar");
+            System.out.println("Opção 0 - Sair");
+            System.out.println("***********************************");
+            System.out.print("Digite a opção: ");
+            opcao = in.nextInt();
             switch (opcao) {
                 case 1:
-                    System.out.print("Digite um número de 0 a 100: ");
-                    int numeroAposta = scanner.nextInt();
-                    if (numeroAposta < 0 || numeroAposta > 100) {
-                        System.out.println("Aposta inválida.");
-                        break;
-                    }
-                    int numeroSorteado = random.nextInt(101);
-                    if (numeroAposta == numeroSorteado) {
-                        System.out.println("Você ganhou R$ 1.000,00 reais.");
-                    } else {
-                        System.out.println("Que pena! O número sorteado foi: " + numeroSorteado + ".");
-                    }
+                    aposta1();
                     break;
                 case 2:
-                    System.out.print("Digite uma letra de A à Z: ");
-                    String entrada = scanner.next();
-                    if (entrada.length() != 1 || !Character.isLetter(entrada.charAt(0))) {
-                        System.out.println("Aposta inválida.");
-                        break;
-                    }
-                    char letraAposta = Character.toUpperCase(entrada.charAt(0));
-                    char letraPremiada = 'R';
-                    if (letraAposta == letraPremiada) {
-                        System.out.println("Você ganhou R$ 500,00 reais.");
-                    } else {
-                        System.out.println("Que pena! A letra sorteada foi: " + letraPremiada + ".");
-                    }
+                    aposta2();
                     break;
                 case 3:
-                    System.out.print("Digite um número inteiro: ");
-                    int numero = scanner.nextInt();
-                    if (numero % 2 == 0) {
-                        System.out.println("Você ganhou R$ 100,00 reais.");
-                    } else {
-                        System.out.println("Que pena! O número digitado é ímpar e a premiação foi para números pares.");
-                    }
+                    aposta3();
                     break;
                 case 0:
-                    System.out.println("Saindo...");
                     break;
                 default:
-                    System.out.println("Opção inválida.");
+                    System.out.println("Você digitou uma opção inválida.\n");
                     break;
             }
         } while (opcao != 0);
+    }
 
-        scanner.close();
+    private static void aposta1() {
+        System.out.println("\nAposta de 0 a 100");
+        Random rnd = new Random();
+        int sorteio = rnd.nextInt(101);
+        // System.out.println("Numero sorteado: " + sorteio);
+        Scanner in = new Scanner(System.in);
+        System.out.print("Digite sua aposta, de 0 a 100: ");
+        int aposta = in.nextInt();
+        if(aposta == sorteio){
+            System.out.println("Você ganhou milzão.");
+        }else {
+            System.out.println("Você perdeu!, o número sorteado foi: " + sorteio);
+        }
+        in.close();
+    }
+
+    private static void aposta2() throws IOException {
+        System.out.println("\nAposta de A a Z");
+        char letraSorteada = 'R';
+        System.out.print("Digite a letra de A a Z: ");
+        char letraApostada = (char)System.in.read();
+
+        if(Character.isLetter(letraApostada)){
+            char letraApostadaMaiusculo = Character.toUpperCase(letraApostada);
+            if(letraApostadaMaiusculo == letraSorteada){
+                System.out.println("Você ganhou 500,00.\n");
+            }else {
+                System.out.println("Você perdeu!, a letra sorteada foi: " + letraSorteada + "\n");
+            }
+        }else{
+            System.out.println("Não é uma letra válida.");
+        }
+    }
+
+    private static void aposta3() {
+        System.out.println("\nAposta em par ou ímpar");
+        System.out.print("Digite um número: ");
+        Scanner in = new Scanner(System.in);
+        int numeroDigitado = in.nextInt();
+        if(numeroDigitado % 2 == 0){
+            System.out.println("Você ganhou 100,00.");
+        }else{
+            System.out.println("Você perdeu!");
+        }
     }
 }
